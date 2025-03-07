@@ -90,7 +90,7 @@ const testimonials = [
   {
     name: 'Maria Rodriguez, RN',
     role: 'Team Lead, Family Care Practice',
-    quote: 'Managing my team of nurses has never been easier. The platform lets me assign clients, track appointments, and monitor earnings all from one dashboard. It's been a game-changer for our practice.',
+    quote: "Managing my team of nurses has never been easier. The platform lets me assign clients, track appointments, and monitor earnings all from one dashboard. It's been a game-changer for our practice.",
     image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80',
     rating: 5,
   },
@@ -100,7 +100,7 @@ const testimonials = [
 const faqs = [
   {
     question: 'How does the verification process work?',
-    answer: 'After registering, you'll need to upload your nursing credentials, license, and identification. Our AI-assisted verification system will scan your documents for authenticity while our team reviews your information. This process typically takes 1-2 business days.',
+    answer: "After registering, you'll need to upload your nursing credentials, license, and identification. Our AI-assisted verification system will scan your documents for authenticity while our team reviews your information. This process typically takes 1-2 business days.",
   },
   {
     question: 'Can I set my own rates and services?',
@@ -112,7 +112,7 @@ const faqs = [
   },
   {
     question: 'Can I bring my existing clients onto the platform?',
-    answer: 'Yes! You can easily invite your existing clients to join your Nurse-Sync practice. They'll receive an email invitation with instructions to create an account and connect with your practice.',
+    answer: "Yes! You can easily invite your existing clients to join your Nurse-Sync practice. They'll receive an email invitation with instructions to create an account and connect with your practice.",
   },
   {
     question: 'What kind of support is available?',
