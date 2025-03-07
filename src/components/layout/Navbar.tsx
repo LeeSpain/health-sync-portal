@@ -44,9 +44,9 @@ const Navbar = () => {
   // Authenticated links
   const authLinks = [
     { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Clients', path: '/clients' },
-    { name: 'Schedule', path: '/schedule' },
-    { name: 'Earnings', path: '/earnings' },
+    { name: 'Appointments', path: '/dashboard/appointments' },
+    { name: 'Clients', path: '/dashboard/clients' },
+    { name: 'Finance', path: '/dashboard/finance' },
   ];
 
   return (
@@ -90,16 +90,18 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-4">
           {isAuthenticated ? (
             <div className="flex items-center space-x-4">
-              <Link to="/profile">
+              <Link to="/dashboard/settings">
                 <Button variant="outline" size="sm" className="rounded-full">
                   <User className="h-4 w-4 mr-2" />
                   Profile
                 </Button>
               </Link>
-              <Button variant="ghost" size="sm" className="text-gray-600 dark:text-gray-400">
-                <LogOut className="h-4 w-4 mr-2" />
-                Logout
-              </Button>
+              <Link to="/">
+                <Button variant="ghost" size="sm" className="text-gray-600 dark:text-gray-400">
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+              </Link>
             </div>
           ) : (
             <>
@@ -152,17 +154,20 @@ const Navbar = () => {
               {isAuthenticated ? (
                 <div className="flex flex-col space-y-4">
                   <Link 
-                    to="/profile" 
+                    to="/dashboard/settings" 
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center text-gray-700 dark:text-gray-300"
                   >
                     <User className="h-5 w-5 mr-2" />
                     Profile
                   </Link>
-                  <button className="flex items-center text-gray-700 dark:text-gray-300">
+                  <Link
+                    to="/"
+                    className="flex items-center text-gray-700 dark:text-gray-300"
+                  >
                     <LogOut className="h-5 w-5 mr-2" />
                     Logout
-                  </button>
+                  </Link>
                 </div>
               ) : (
                 <div className="flex flex-col space-y-4">
