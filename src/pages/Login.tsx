@@ -24,16 +24,33 @@ const Login = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Simulate authentication - in a real app, you would validate credentials
+    const email = (e.target as HTMLFormElement).email.value;
+    const password = (e.target as HTMLFormElement).password.value;
+    
+    // Basic client-side validation
+    if (!email || !password) {
+      toast({
+        title: "Error",
+        description: "Please enter your email and password",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     // Simulating login for demo purposes
     toast({
       title: "Login Successful",
       description: "Welcome back to Nurse-Sync!",
     });
     
-    // Navigate to dashboard after successful login
+    // Set a mock authentication state - in a real app, this would be handled by your auth system
+    localStorage.setItem('isAuthenticated', 'true');
+    
+    // Use setTimeout to ensure the toast is shown before navigation
     setTimeout(() => {
       navigate('/dashboard');
-    }, 1000);
+    }, 500);
   };
 
   return (
@@ -68,6 +85,7 @@ const Login = () => {
                   <Label htmlFor="email">Email Address</Label>
                   <Input 
                     id="email" 
+                    name="email"
                     type="email" 
                     placeholder="Enter your email address" 
                     required 
@@ -84,6 +102,7 @@ const Login = () => {
                   </div>
                   <Input 
                     id="password" 
+                    name="password"
                     type="password" 
                     placeholder="Enter your password" 
                     required

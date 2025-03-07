@@ -1,15 +1,18 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Menu, X, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   // Check if user is on the landing page
   const isLandingPage = location.pathname === '/';
@@ -24,13 +27,27 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    // For demonstration purposes, we're checking if the path includes dashboard
-    // In a real app, this would be replaced with proper auth checking
-    setIsAuthenticated(location.pathname.includes('dashboard'));
-  }, [location]);
+    // Check authentication status from localStorage
+    const authStatus = localStorage.getItem('isAuthenticated') === 'true';
+    setIsAuthenticated(authStatus);
+  }, [location.pathname]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleLogout = () => {
+    // Clear authentication status
+    localStorage.removeItem('isAuthenticated');
+    setIsAuthenticated(false);
+    
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out.",
+    });
+    
+    // Navigate to home page
+    navigate('/');
   };
 
   // Navigation links
