@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { Button } from '@/components/ui/button';
@@ -11,8 +10,8 @@ import {
   Trash2, 
   FolderPlus, 
   File, 
-  FileImage, 
-  FilePdf, 
+  FileImage,
+  FileType,
   Filter
 } from 'lucide-react';
 import GlassCard from '@/components/ui/GlassCard';
@@ -97,7 +96,7 @@ const Documents = () => {
   const getFileIcon = (type: string) => {
     switch (type) {
       case 'pdf':
-        return <FilePdf className="h-5 w-5 text-red-500" />;
+        return <FileType className="h-5 w-5 text-red-500" />;
       case 'image':
         return <FileImage className="h-5 w-5 text-blue-500" />;
       case 'doc':

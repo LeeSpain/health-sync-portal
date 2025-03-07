@@ -12,7 +12,8 @@ import {
   Sun, 
   Shield, 
   LogOut,
-  Check
+  Check,
+  Plus
 } from 'lucide-react';
 import GlassCard from '@/components/ui/GlassCard';
 import FadeIn from '@/components/animations/FadeIn';
