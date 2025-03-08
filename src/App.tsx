@@ -17,6 +17,10 @@ import Finance from "./pages/dashboard/Finance";
 import Messages from "./pages/dashboard/Messages";
 import Documents from "./pages/dashboard/Documents";
 import Settings from "./pages/dashboard/Settings";
+import Staff from "./pages/dashboard/Staff";
+import AddStaff from "./pages/dashboard/AddStaff";
+import StaffDetails from "./pages/dashboard/StaffDetails";
+import StaffRota from "./pages/dashboard/StaffRota";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +44,10 @@ const App = () => (
           <Route path="/dashboard/finance" element={<Finance />} />
           <Route path="/dashboard/messages" element={<Messages />} />
           <Route path="/dashboard/documents" element={<Documents />} />
+          <Route path="/dashboard/staff" element={<Staff />} />
+          <Route path="/dashboard/staff/add" element={<AddStaff />} />
+          <Route path="/dashboard/staff/:id" element={<StaffDetails />} />
+          <Route path="/dashboard/staff/rota" element={<StaffRota />} />
           <Route path="/dashboard/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
