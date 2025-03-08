@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Home, 
@@ -30,6 +30,19 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Check authentication on initial load
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+    if (!isAuthenticated) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to access the dashboard.",
+        variant: "destructive",
+      });
+      navigate('/login');
+    }
+  }, [navigate, toast]);
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -39,11 +52,18 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   };
 
   const handleLogout = () => {
+    // Clear authentication status
+    localStorage.removeItem('isAuthenticated');
+    
     toast({
       title: "Logged Out",
       description: "You have been successfully logged out.",
     });
-    navigate('/');
+    
+    // Navigate to home page after a short delay to ensure the toast is shown
+    setTimeout(() => {
+      navigate('/');
+    }, 500);
   };
 
   const navItems = [

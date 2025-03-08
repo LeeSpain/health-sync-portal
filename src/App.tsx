@@ -9,7 +9,10 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Appointments from "./pages/dashboard/Appointments";
+import NewAppointment from "./pages/dashboard/NewAppointment";
 import Clients from "./pages/dashboard/Clients";
+import AddClient from "./pages/dashboard/AddClient";
+import ClientDetails from "./pages/dashboard/ClientDetails";
 import Finance from "./pages/dashboard/Finance";
 import Messages from "./pages/dashboard/Messages";
 import Documents from "./pages/dashboard/Documents";
@@ -30,7 +33,10 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/appointments" element={<Appointments />} />
+          <Route path="/dashboard/appointments/new" element={<NewAppointment />} />
           <Route path="/dashboard/clients" element={<Clients />} />
+          <Route path="/dashboard/clients/add" element={<AddClient />} />
+          <Route path="/dashboard/clients/:id" element={<ClientDetails />} />
           <Route path="/dashboard/finance" element={<Finance />} />
           <Route path="/dashboard/messages" element={<Messages />} />
           <Route path="/dashboard/documents" element={<Documents />} />
