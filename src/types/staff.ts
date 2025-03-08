@@ -8,6 +8,7 @@ export interface StaffMember {
   phone?: string;
   availability?: string;
   assignedClients?: number;
+  connectedClientIds?: string[]; // Add this to track connected clients
 }
 
 export interface Client {
@@ -16,6 +17,7 @@ export interface Client {
   address: string;
   careType: string;
   image: string;
+  assignedStaffIds?: string[]; // Add this to track connected staff
 }
 
 export interface Shift {

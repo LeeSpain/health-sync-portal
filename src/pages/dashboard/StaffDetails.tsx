@@ -1,7 +1,7 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
+import ClientConnection from '@/components/staff/ClientConnection';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -15,6 +15,7 @@ import { ArrowLeft, Mail, Phone, Calendar, Clock, MapPin, Award, UserCheck, Edit
 import GlassCard from '@/components/ui/GlassCard';
 import FadeIn from '@/components/animations/FadeIn';
 import { useToast } from '@/hooks/use-toast';
+import { Client } from '@/types/staff';
 
 // Mock staff member data
 const mockStaffMember = {
@@ -87,6 +88,34 @@ const mockUpcomingShifts = [
   }
 ];
 
+// Mock available clients (for connection)
+const mockAvailableClients = [
+  {
+    id: '4',
+    name: 'Robert Williams',
+    age: 58,
+    careType: 'Physical Therapy',
+    address: '789 Oak Street, London, UK',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80'
+  },
+  {
+    id: '5',
+    name: 'Dorothy Clark',
+    age: 82,
+    careType: 'Daily Care',
+    address: '321 Pine Avenue, London, UK',
+    image: 'https://images.unsplash.com/photo-1551727974-8af20a3811ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80'
+  },
+  {
+    id: '6',
+    name: 'Michael Johnson',
+    age: 67,
+    careType: 'Medication Management',
+    address: '456 Elm Road, London, UK',
+    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80'
+  }
+];
+
 const StaffDetails = () => {
   const navigate = useNavigate();
   const params = useParams();
@@ -98,7 +127,8 @@ const StaffDetails = () => {
   // In a real app, we would fetch the staff member data using the ID from params
   const staffId = params.id;
   const [staffMember, setStaffMember] = useState(mockStaffMember);
-  const [assignedClients, setAssignedClients] = useState(mockAssignedClients);
+  const [assignedClients, setAssignedClients] = useState<Client[]>(mockAssignedClients);
+  const [availableClients, setAvailableClients] = useState<Client[]>(mockAvailableClients);
   const [upcomingShifts, setUpcomingShifts] = useState(mockUpcomingShifts);
   
   // Form state for editing staff details
@@ -147,6 +177,42 @@ const StaffDetails = () => {
   
   const handleViewClient = (clientId: string) => {
     navigate(`/dashboard/clients/${clientId}`);
+  };
+  
+  const handleConnectClient = (clientId: string) => {
+    // Find the client to connect
+    const clientToConnect = availableClients.find(client => client.id === clientId);
+    if (!clientToConnect) return;
+    
+    // Add client to assigned clients
+    setAssignedClients(prev => [...prev, clientToConnect]);
+    
+    // Remove from available clients
+    setAvailableClients(prev => prev.filter(client => client.id !== clientId));
+    
+    // Update staff member's assigned client count
+    setStaffMember(prev => ({
+      ...prev,
+      assignedClients: (prev.assignedClients || 0) + 1
+    }));
+  };
+  
+  const handleDisconnectClient = (clientId: string) => {
+    // Find the client to disconnect
+    const clientToDisconnect = assignedClients.find(client => client.id === clientId);
+    if (!clientToDisconnect) return;
+    
+    // Remove client from assigned clients
+    setAssignedClients(prev => prev.filter(client => client.id !== clientId));
+    
+    // Add back to available clients
+    setAvailableClients(prev => [...prev, clientToDisconnect]);
+    
+    // Update staff member's assigned client count
+    setStaffMember(prev => ({
+      ...prev,
+      assignedClients: Math.max((prev.assignedClients || 0) - 1, 0)
+    }));
   };
   
   const getAvailabilityBadgeVariant = (availability: string) => {
@@ -258,7 +324,7 @@ const StaffDetails = () => {
         <Tabs defaultValue="overview" className="space-y-4">
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="clients">Assigned Clients</TabsTrigger>
+            <TabsTrigger value="clients">Connected Clients</TabsTrigger>
             <TabsTrigger value="schedule">Schedule</TabsTrigger>
           </TabsList>
           
@@ -482,58 +548,12 @@ const StaffDetails = () => {
             <FadeIn>
               <GlassCard>
                 <div className="p-6">
-                  <div className="flex justify-between items-center mb-6">
-                    <h3 className="font-semibold text-xl">Assigned Clients</h3>
-                    <Button>
-                      <Plus className="h-4 w-4 mr-2" />
-                      Assign New Client
-                    </Button>
-                  </div>
-                  
-                  {assignedClients.length > 0 ? (
-                    <div className="divide-y divide-gray-200 dark:divide-gray-700">
-                      {assignedClients.map((client) => (
-                        <div 
-                          key={client.id}
-                          className="py-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 -mx-6 px-6 cursor-pointer"
-                          onClick={() => handleViewClient(client.id)}
-                        >
-                          <div className="flex items-center">
-                            <img 
-                              src={client.image} 
-                              alt={client.name}
-                              className="h-10 w-10 rounded-full object-cover mr-4"
-                            />
-                            <div>
-                              <h4 className="text-base font-medium text-gray-900 dark:text-white">
-                                {client.name}
-                              </h4>
-                              <p className="text-sm text-gray-500 dark:text-gray-400">
-                                {client.age} years old • {client.careType}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex items-center">
-                            <div className="text-right mr-4">
-                              <p className="text-sm text-gray-900 dark:text-gray-100">Next Visit</p>
-                              <p className="text-sm text-gray-500 dark:text-gray-400">{client.nextVisit}</p>
-                            </div>
-                            <ChevronRight className="h-5 w-5 text-gray-400" />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="text-center py-12">
-                      <UserCheck className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No assigned clients</h3>
-                      <p className="text-gray-500 mb-6">This staff member has no clients assigned yet.</p>
-                      <Button>
-                        <Plus className="h-4 w-4 mr-2" />
-                        Assign First Client
-                      </Button>
-                    </div>
-                  )}
+                  <ClientConnection 
+                    assignedClients={assignedClients}
+                    availableClients={availableClients}
+                    onConnectClient={handleConnectClient}
+                    onDisconnectClient={handleDisconnectClient}
+                  />
                 </div>
               </GlassCard>
             </FadeIn>
