@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
@@ -8,7 +7,7 @@ import FadeIn from '@/components/animations/FadeIn';
 import { 
   ArrowLeft, Calendar, Edit, FileText, User, Phone, Mail, MapPin, 
   ClipboardList, PlusCircle, Heart, AlertTriangle, UserPlus, 
-  MessageSquare, Video, Pills, Activity, Home, Clipboard
+  MessageSquare, Video, Pill, Activity, Home, Clipboard
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from '@/components/ui/input';
@@ -16,7 +15,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 
-// Mock client data (in a real app, this would come from an API)
 const clientData = {
   id: '1',
   firstName: 'Emma',
@@ -77,16 +75,13 @@ const ClientDetails = () => {
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   
-  // In a real app, you would fetch client data based on ID
   const client = clientData;
 
   const handleStartVideoCall = () => {
-    // In a real app, this would initiate a video call
     window.alert('Starting video call with ' + client.firstName + ' ' + client.lastName);
   };
 
   const handleSaveChanges = () => {
-    // In a real app, this would save the changes to the backend
     setIsEditing(false);
   };
 
@@ -163,7 +158,6 @@ const ClientDetails = () => {
           
           <TabsContent value="overview" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Client Profile */}
               <FadeIn delay={100}>
                 <GlassCard className="lg:col-span-1">
                   <div className="p-6 text-center">
@@ -205,49 +199,44 @@ const ClientDetails = () => {
                 </GlassCard>
               </FadeIn>
               
-              {/* Summary Cards */}
               <FadeIn delay={200} className="lg:col-span-2">
                 <div className="space-y-6">
-                  {/* Quick Stats */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <GlassCard className="p-4">
-                      <div className="flex items-center">
-                        <div className="h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-800 flex items-center justify-center mr-4">
-                          <Calendar className="h-6 w-6 text-blue-600 dark:text-blue-200" />
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">Next Appointment</p>
-                          <p className="text-lg font-medium text-gray-900 dark:text-white">{client.nextAppointment}</p>
-                        </div>
+                  <GlassCard className="p-4">
+                    <div className="flex items-center">
+                      <div className="h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-800 flex items-center justify-center mr-4">
+                        <Calendar className="h-6 w-6 text-blue-600 dark:text-blue-200" />
                       </div>
-                    </GlassCard>
-                    
-                    <GlassCard className="p-4">
-                      <div className="flex items-center">
-                        <div className="h-12 w-12 rounded-full bg-green-100 dark:bg-green-800 flex items-center justify-center mr-4">
-                          <Heart className="h-6 w-6 text-green-600 dark:text-green-200" />
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">Vital Signs</p>
-                          <p className="text-lg font-medium text-gray-900 dark:text-white">{client.vitalSigns.bloodPressure}</p>
-                        </div>
+                      <div>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Next Appointment</p>
+                        <p className="text-lg font-medium text-gray-900 dark:text-white">{client.nextAppointment}</p>
                       </div>
-                    </GlassCard>
-                    
-                    <GlassCard className="p-4">
-                      <div className="flex items-center">
-                        <div className="h-12 w-12 rounded-full bg-red-100 dark:bg-red-800 flex items-center justify-center mr-4">
-                          <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-200" />
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">Allergies</p>
-                          <p className="text-lg font-medium text-gray-900 dark:text-white">{client.allergies.length}</p>
-                        </div>
-                      </div>
-                    </GlassCard>
-                  </div>
+                    </div>
+                  </GlassCard>
                   
-                  {/* Insurance */}
+                  <GlassCard className="p-4">
+                    <div className="flex items-center">
+                      <div className="h-12 w-12 rounded-full bg-green-100 dark:bg-green-800 flex items-center justify-center mr-4">
+                        <Heart className="h-6 w-6 text-green-600 dark:text-green-200" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Vital Signs</p>
+                        <p className="text-lg font-medium text-gray-900 dark:text-white">{client.vitalSigns.bloodPressure}</p>
+                      </div>
+                    </div>
+                  </GlassCard>
+                  
+                  <GlassCard className="p-4">
+                    <div className="flex items-center">
+                      <div className="h-12 w-12 rounded-full bg-red-100 dark:bg-red-800 flex items-center justify-center mr-4">
+                        <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-200" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Allergies</p>
+                        <p className="text-lg font-medium text-gray-900 dark:text-white">{client.allergies.length}</p>
+                      </div>
+                    </div>
+                  </GlassCard>
+                  
                   <GlassCard>
                     <div className="p-5">
                       <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Insurance Information</h3>
@@ -272,7 +261,6 @@ const ClientDetails = () => {
                     </div>
                   </GlassCard>
                   
-                  {/* Emergency Contact */}
                   <GlassCard>
                     <div className="p-5">
                       <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Emergency Contact</h3>
@@ -303,7 +291,6 @@ const ClientDetails = () => {
           
           <TabsContent value="medical" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Vital Signs */}
               <GlassCard>
                 <div className="p-5">
                   <div className="flex items-center mb-4">
@@ -354,7 +341,6 @@ const ClientDetails = () => {
                 </div>
               </GlassCard>
               
-              {/* Allergies */}
               <GlassCard>
                 <div className="p-5">
                   <div className="flex items-center mb-4">
@@ -384,11 +370,10 @@ const ClientDetails = () => {
                 </div>
               </GlassCard>
               
-              {/* Medications */}
               <GlassCard className="lg:col-span-2">
                 <div className="p-5">
                   <div className="flex items-center mb-4">
-                    <Pills className="h-5 w-5 mr-2 text-nurse-600 dark:text-nurse-400" />
+                    <Pill className="h-5 w-5 mr-2 text-nurse-600 dark:text-nurse-400" />
                     <h3 className="text-lg font-medium text-gray-900 dark:text-white">Medications</h3>
                   </div>
                   
@@ -429,7 +414,6 @@ const ClientDetails = () => {
                 </div>
               </GlassCard>
               
-              {/* Medical History */}
               <GlassCard className="lg:col-span-2">
                 <div className="p-5">
                   <div className="flex items-center mb-4">
@@ -466,7 +450,6 @@ const ClientDetails = () => {
           
           <TabsContent value="contacts" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Family Members */}
               <GlassCard>
                 <div className="p-5">
                   <div className="flex items-center justify-between mb-4">
@@ -501,7 +484,6 @@ const ClientDetails = () => {
                 </div>
               </GlassCard>
               
-              {/* Care Team */}
               <GlassCard>
                 <div className="p-5">
                   <div className="flex items-center justify-between mb-4">

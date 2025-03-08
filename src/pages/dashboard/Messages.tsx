@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { 
   Search, Plus, Send, Paperclip, Star, Clock, Video, Phone, 
-  Users, UserPlus, X, Mic, MicOff, PlusCircle
+  Users, UserPlus, X, Mic, MicOff, PlusCircle, FileText
 } from 'lucide-react';
 import GlassCard from '@/components/ui/GlassCard';
 import FadeIn from '@/components/animations/FadeIn';
@@ -16,9 +15,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
-// Mock data for messages
 const conversations = [
   {
     id: 1,
@@ -87,7 +86,6 @@ const conversations = [
   },
 ];
 
-// Mock data for contacts
 const contacts = [
   {
     id: 1,
@@ -126,7 +124,6 @@ const contacts = [
   },
 ];
 
-// Mock data for the active conversation
 const messageThread = [
   {
     id: 1,
@@ -202,7 +199,6 @@ const Messages = () => {
 
   const handleSendMessage = () => {
     if (messageText.trim()) {
-      // In a real app, you would send the message to the backend here
       toast({
         description: "Message sent successfully",
       });
@@ -260,7 +256,6 @@ const Messages = () => {
       return;
     }
 
-    // In a real app, you would create a new conversation here
     toast({
       title: "Success",
       description: "New message conversation created",
@@ -275,7 +270,6 @@ const Messages = () => {
     conversation.contact.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Check for clientId in URL params to auto-select a conversation
   React.useEffect(() => {
     const params = new URLSearchParams(location.search);
     const clientId = params.get('clientId');
@@ -317,7 +311,6 @@ const Messages = () => {
         </FadeIn>
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Conversations List */}
           <FadeIn delay={100} className="lg:col-span-4">
             <GlassCard className="h-[calc(100vh-240px)] flex flex-col">
               <div className="p-4 border-b border-gray-200 dark:border-gray-700">
@@ -390,10 +383,8 @@ const Messages = () => {
             </GlassCard>
           </FadeIn>
           
-          {/* Conversation View */}
           <FadeIn delay={150} className="lg:col-span-8">
             <GlassCard className="h-[calc(100vh-240px)] flex flex-col">
-              {/* Header */}
               <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="relative mr-3">
@@ -460,7 +451,6 @@ const Messages = () => {
                 </div>
               </div>
               
-              {/* Video Call Modal */}
               <Dialog open={isVideoCallActive} onOpenChange={setIsVideoCallActive}>
                 <DialogContent className="sm:max-w-[800px]">
                   <DialogHeader>
@@ -519,7 +509,6 @@ const Messages = () => {
                 </DialogContent>
               </Dialog>
               
-              {/* Add Participant Dialog */}
               <Dialog open={isAddParticipantOpen} onOpenChange={setIsAddParticipantOpen}>
                 <DialogContent>
                   <DialogHeader>
@@ -557,7 +546,6 @@ const Messages = () => {
                 </DialogContent>
               </Dialog>
               
-              {/* New Message Dialog */}
               <Dialog open={isNewMessageOpen} onOpenChange={setIsNewMessageOpen}>
                 <DialogContent className="sm:max-w-[600px]">
                   <DialogHeader>
@@ -635,7 +623,6 @@ const Messages = () => {
                 </DialogContent>
               </Dialog>
               
-              {/* Messages */}
               <Tabs defaultValue="chat" className="flex-1 flex flex-col">
                 <TabsList className="mx-4 my-2 justify-start">
                   <TabsTrigger value="chat">Chat</TabsTrigger>
@@ -690,7 +677,6 @@ const Messages = () => {
                     ))}
                   </div>
                   
-                  {/* Message Input */}
                   <div className="p-4 border-t border-gray-200 dark:border-gray-700">
                     <div className="flex items-end space-x-2">
                       <Textarea
@@ -772,3 +758,4 @@ const Messages = () => {
 };
 
 export default Messages;
+
